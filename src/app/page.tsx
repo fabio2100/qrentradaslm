@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 
 interface HomeProps {
@@ -10,6 +10,18 @@ interface HomeProps {
 export default function Home({ searchParams }: HomeProps) {
   const [inputValue, setInputValue] = useState("");
   const [showPasswordError, setShowPasswordError] = useState(false);
+
+  // Efecto para recargar la página después de 5 segundos si hay error de password
+  useEffect(() => {
+    if (showPasswordError) {
+      const timer = setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+
+      // Limpiar el timer si el componente se desmonta
+      return () => clearTimeout(timer);
+    }
+  }, [showPasswordError]);
 
   // Si hay error de password, mostrar pantalla de error
   if (showPasswordError) {
