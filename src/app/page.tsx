@@ -83,7 +83,7 @@ export default function Home({ searchParams }: HomeProps) {
           type="password"
           inputMode="numeric"
           pattern="[0-9]*"
-          placeholder="Ingrese un número"
+          placeholder="Ingrese código"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           style={{
