@@ -5,12 +5,13 @@ import Persona from '@/models/Persona';
 // GET - Obtener persona por DNI
 export async function GET(
   request: NextRequest,
-  { params }: { params: { dni: string } }
+  { params }: { params: Promise<{ dni: string }> }
 ) {
   try {
     await connectToDatabase();
     
-    const DNI = parseInt(params.dni);
+    const { dni } = await params;
+    const DNI = parseInt(dni);
     
     if (isNaN(DNI)) {
       return NextResponse.json({
@@ -45,12 +46,13 @@ export async function GET(
 // PATCH - Actualizar estado de ingreso de una persona
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { dni: string } }
+  { params }: { params: Promise<{ dni: string }> }
 ) {
   try {
     await connectToDatabase();
     
-    const DNI = parseInt(params.dni);
+    const { dni } = await params;
+    const DNI = parseInt(dni);
     const body = await request.json();
     const { ingreso } = body;
     
