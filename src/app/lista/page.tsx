@@ -19,7 +19,6 @@ import {
   Toolbar,
   IconButton,
   Button,
-  Grid,
   Card,
   CardContent
 } from '@mui/material';
@@ -164,11 +163,16 @@ export default function ListaPersonas() {
           </Typography>
           
           {/* Estadísticas */}
-          <Grid container spacing={2} sx={{ mb: 4 }}>
-            <Grid item xs={12} sm={4}>
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: { xs: 'column', sm: 'row' },
+            gap: 3,
+            mb: 3 
+          }}>
+            <Box sx={{ flex: 1 }}>
               <Card elevation={2}>
-                <CardContent sx={{ textAlign: 'center', py: 2 }}>
-                  <Typography variant="h4" color="primary">
+                <CardContent sx={{ textAlign: 'center' }}>
+                  <Typography variant="h3" component="div" color="primary">
                     {totalPersonas}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
@@ -176,12 +180,12 @@ export default function ListaPersonas() {
                   </Typography>
                 </CardContent>
               </Card>
-            </Grid>
+            </Box>
             
-            <Grid item xs={12} sm={4}>
+            <Box sx={{ flex: 1 }}>
               <Card elevation={2}>
-                <CardContent sx={{ textAlign: 'center', py: 2 }}>
-                  <Typography variant="h4" color="success.main">
+                <CardContent sx={{ textAlign: 'center' }}>
+                  <Typography variant="h3" component="div" color="success.main">
                     {personasDentro}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
@@ -189,12 +193,12 @@ export default function ListaPersonas() {
                   </Typography>
                 </CardContent>
               </Card>
-            </Grid>
+            </Box>
             
-            <Grid item xs={12} sm={4}>
+            <Box sx={{ flex: 1 }}>
               <Card elevation={2}>
-                <CardContent sx={{ textAlign: 'center', py: 2 }}>
-                  <Typography variant="h4" color="text.secondary">
+                <CardContent sx={{ textAlign: 'center' }}>
+                  <Typography variant="h3" component="div" color="text.secondary">
                     {personasFuera}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
@@ -202,8 +206,8 @@ export default function ListaPersonas() {
                   </Typography>
                 </CardContent>
               </Card>
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
 
           {error && (
             <Alert severity="error" sx={{ mb: 3 }}>

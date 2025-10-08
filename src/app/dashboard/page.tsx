@@ -1,85 +1,90 @@
 'use client';
 
-import React from 'react';
-import {
-  Container,
-  Paper,
-  Typography,
+import { 
+  AppBar, 
+  Toolbar, 
+  Typography, 
+  Container, 
   Button,
-  Box,
-  Grid,
   Card,
   CardContent,
-  CardActions
+  Box
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import ListIcon from '@mui/icons-material/List';
+import PeopleIcon from '@mui/icons-material/People';
 
 export default function Dashboard() {
   const router = useRouter();
 
   return (
-    <Container maxWidth="md" sx={{ mt: 4 }}>
-      <Paper elevation={3} sx={{ p: 4 }}>
-        <Typography variant="h3" component="h1" gutterBottom align="center">
-          QR Entradas LM
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            QR Entradas LM - Dashboard
+          </Typography>
+        </Toolbar>
+      </AppBar>
+
+      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Typography variant="h4" component="h1" gutterBottom align="center">
+          Panel de Control
         </Typography>
         
-        <Typography variant="h6" color="text.secondary" align="center" sx={{ mb: 4 }}>
-          Sistema de Control de Entradas
+        <Typography variant="body1" align="center" color="text.secondary" sx={{ mb: 4 }}>
+          Selecciona una opción para comenzar
         </Typography>
 
-        <Grid container spacing={3} sx={{ mt: 2 }}>
-          <Grid item xs={12} md={6}>
+        <Box sx={{ 
+          display: 'flex', 
+          flexDirection: { xs: 'column', md: 'row' },
+          gap: 3,
+          mt: 2 
+        }}>
+          <Box sx={{ flex: 1 }}>
             <Card elevation={2} sx={{ height: '100%' }}>
               <CardContent sx={{ textAlign: 'center', py: 4 }}>
                 <PersonAddIcon sx={{ fontSize: 60, color: 'primary.main', mb: 2 }} />
-                <Typography variant="h5" component="h2" gutterBottom>
-                  Nueva Persona
+                <Typography variant="h5" gutterBottom>
+                  Agregar Persona
                 </Typography>
-                <Typography variant="body1" color="text.secondary">
-                  Registrar una nueva persona en el sistema
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                  Registra una nueva persona en el sistema
                 </Typography>
-              </CardContent>
-              <CardActions sx={{ justifyContent: 'center', pb: 3 }}>
-                <Button
-                  variant="contained"
-                  size="large"
+                <Button 
+                  variant="contained" 
                   onClick={() => router.push('/nueva')}
                   startIcon={<PersonAddIcon />}
                 >
-                  Agregar Persona
+                  Nueva Persona
                 </Button>
-              </CardActions>
+              </CardContent>
             </Card>
-          </Grid>
+          </Box>
 
-          <Grid item xs={12} md={6}>
+          <Box sx={{ flex: 1 }}>
             <Card elevation={2} sx={{ height: '100%' }}>
               <CardContent sx={{ textAlign: 'center', py: 4 }}>
-                <ListIcon sx={{ fontSize: 60, color: 'primary.main', mb: 2 }} />
-                <Typography variant="h5" component="h2" gutterBottom>
-                  Ver Lista
+                <PeopleIcon sx={{ fontSize: 60, color: 'primary.main', mb: 2 }} />
+                <Typography variant="h5" gutterBottom>
+                  Ver Listado
                 </Typography>
-                <Typography variant="body1" color="text.secondary">
-                  Ver todas las personas registradas
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                  Consulta todas las personas registradas
                 </Typography>
-              </CardContent>
-              <CardActions sx={{ justifyContent: 'center', pb: 3 }}>
-                <Button
-                  variant="contained"
-                  size="large"
+                <Button 
+                  variant="outlined" 
                   onClick={() => router.push('/lista')}
-                  startIcon={<ListIcon />}
+                  startIcon={<PeopleIcon />}
                 >
                   Ver Lista
                 </Button>
-              </CardActions>
+              </CardContent>
             </Card>
-          </Grid>
-        </Grid>
-      </Paper>
-    </Container>
+          </Box>
+        </Box>
+      </Container>
+    </Box>
   );
 }
