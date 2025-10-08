@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const ingreso = searchParams.get('ingreso');
     
-    let query = {};
+    let query: Record<string, any> = {};
     if (ingreso !== null) {
       query.ingreso = ingreso === 'true';
     }
