@@ -34,7 +34,7 @@ export async function GET(
       data: persona
     });
     
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error al obtener persona:', error);
     return NextResponse.json({
       success: false,
@@ -93,7 +93,7 @@ export async function PATCH(
       message: `Persona ${ingreso ? 'registrada como ingresada' : 'registrada como salida'} exitosamente`
     });
     
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error al actualizar persona:', error);
     return NextResponse.json({
       success: false,

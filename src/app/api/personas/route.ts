@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import Persona from '@/models/Persona';
 
-// GET - Obtener todas las personas o filtrar por estado de ingreso
 export async function GET(request: NextRequest) {
   try {
     await connectToDatabase();
@@ -19,72 +18,58 @@ export async function GET(request: NextRequest) {
     
     return NextResponse.json({
       success: true,
-      data: personas,
-      count: personas.length
+      data: personas
     });
-    
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error al obtener personas:', error);
     return NextResponse.json({
       success: false,
-      error: 'Error al obtener las personas'
+      error: 'Error interno del servidor'
     }, { status: 500 });
   }
 }
 
-// POST - Crear una nueva persona
 export async function POST(request: NextRequest) {
   try {
     await connectToDatabase();
     
     const body = await request.json();
-    const { nombre, DNI, ingreso = false } = body;
+    const { nombre, DNI } = body;
     
-    // Validaciones básicas
     if (!nombre || !DNI) {
       return NextResponse.json({
         success: false,
-        error: 'Nombre y DNI son obligatorios'
+        error: 'Nombre y DNI son requeridos'
       }, { status: 400 });
-    }
-    
-    // Verificar si ya existe una persona con ese DNI
-    const personaExistente = await Persona.findOne({ DNI });
-    if (personaExistente) {
-      return NextResponse.json({
-        success: false,
-        error: 'Ya existe una persona con ese DNI'
-      }, { status: 409 });
     }
     
     const nuevaPersona = new Persona({
       nombre,
       DNI,
-      ingreso,
-      fecha_ingreso: ingreso ? new Date() : null
+      ingreso: false,
+      fecha_ingreso: null
     });
     
-    await nuevaPersona.save();
+    const personaGuardada = await nuevaPersona.save();
     
     return NextResponse.json({
       success: true,
-      data: nuevaPersona,
-      message: 'Persona creada exitosamente'
+      data: personaGuardada
     }, { status: 201 });
     
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error al crear persona:', error);
     
     if (error.code === 11000) {
       return NextResponse.json({
         success: false,
         error: 'Ya existe una persona con ese DNI'
-      }, { status: 409 });
+      }, { status: 400 });
     }
     
     return NextResponse.json({
       success: false,
-      error: 'Error al crear la persona'
+      error: 'Error interno del servidor'
     }, { status: 500 });
   }
 }
